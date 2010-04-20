@@ -30,6 +30,8 @@ class Attachment(models.Model):
     attachment_file = models.FileField(_('attachment'), upload_to=attachment_upload)
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
+    description = models.TextField(_('description'), blank=True)
+    title = models.CharField(_('title'), max_length=255, blank=True)
 
     class Meta:
         ordering = ['-created']
