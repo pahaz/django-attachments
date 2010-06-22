@@ -15,7 +15,7 @@ class AttachmentManager(models.Manager):
 class Attachment(models.Model):
     def attachment_upload(instance, filename):
         """Stores the attachment in a "per module/appname/primary key" folder"""
-        return 'attachments/%s/%s/%s' % (
+        return '../uploads/attachments/%s/%s/%s' % (
             '%s_%s' % (instance.content_object._meta.app_label,
                        instance.content_object._meta.object_name.lower()),
                        instance.content_object.pk,
