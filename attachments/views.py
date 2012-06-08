@@ -8,6 +8,7 @@ from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
 from attachments.models import Attachment
 from attachments.forms import AttachmentForm
+from django.contrib import messages
 
 def add_url_for_obj(obj):
     return reverse('add_attachment', kwargs={
@@ -30,7 +31,8 @@ def add_attachment(request, app_label, module_name, pk,
 
     if form.is_valid():
         form.save(request, obj)
-        request.user.message_set.create(message=ugettext('Your attachment was uploaded.'))
+        #request.user.message_set.create(message=ugettext('Your attachment was uploaded.'))
+        messages.add_message(request, messages.SUCCESS, 'Your attachement was uploaded.')
         return HttpResponseRedirect(next)
     else:
         template_context = {
@@ -48,6 +50,7 @@ def delete_attachment(request, attachment_pk):
     if request.user.has_perm('attachments.delete_foreign_attachments') \
        or request.user == g.creator:
         g.delete()
-        request.user.message_set.create(message=ugettext('Your attachment was deleted.'))
+        #request.user.message_set.create(message=ugettext('Your attachment was deleted.'))
+        messages.add_message(request, messages.SUCCESS, 'Your attachment was deleted.')
     next = request.REQUEST.get('next') or '/'
     return HttpResponseRedirect(next)
